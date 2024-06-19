@@ -1,16 +1,18 @@
-const express = require('express')
-const app = express()
-const PORT = 4000
+const express = require('express');
+const bodyParser = require('body-parser');
+const api = require('./routes/route');
 
+const port = 3000;
+const app = express();
 
-app.get('/home', (req, res) => {
-  res.status(200).json('Welcome, your app is working well');
-})
-
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+app.listen(port, function () {
+  console.log("Server is listening at port:" + port);
 });
 
-// Export the Express API
-module.exports = app
+// Parses the text as url encoded data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Parses the text as json
+app.use(bodyParser.json());
+
+app.use('/api', api);
