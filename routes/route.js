@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const StudentModel = require('../models/student');
+const { getUsers, createUsers, deleteUsers } = require('../controller/users');
+const { applyLeave, leaveApprove, getUsersLeaveDetails } = require('../controller/leaveDetails');
 
 // Connecting to database
 const query = 'mongodb+srv://bharathmspbk:Ki2IfzBTQJVbHAyT@cluster0.ygplqj9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -18,28 +19,12 @@ mongoose.connect(db, {
     }
 });
 
-router.get('/save', function (req, res) {
-    const newStudent = new StudentModel({
-        StudentId: 101,
-        Name: "Sam", Roll: 1
-    });
+router.post('/admin/create', createUsers);
+router.get('/admin/list', getUsers);
+router.post('/admin/delete', deleteUsers);
 
-    newStudent.save().then(function (data) {
-        console.log(data);
-        res.send(data);
-    }).catch(function (err) {
-        console.log(err);
-    })
-});
 
-router.get('/list', function (req, res) {
-    StudentModel.find()
-        .then(function (data) {
-            res.send(data);
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-});
-
+router.post('/leaveApply', applyLeave);
+router.post('/admin/approve', leaveApprove);
+router.post('/getLeaveDetails', getUsersLeaveDetails);
 module.exports = router;
