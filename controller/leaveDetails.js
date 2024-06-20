@@ -84,7 +84,6 @@ const leaveApprove = (req, res) => {
 }
 
 const getUsersLeaveDetails = (req, res) => {
-
     LeaveModel.findById(req.body.userId,
         function (err, data) {
             if (err) {

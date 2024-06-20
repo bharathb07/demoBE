@@ -16,3 +16,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/api', api);
+app.use(cors()); // Enable CORS for all routes
